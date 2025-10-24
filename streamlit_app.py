@@ -1,40 +1,3 @@
-import streamlit as st
-
-# 1. Configuración de la página
-# Establece el título y el layout en "wide" para aprovechar el espacio.
-st.set_page_config(
-    page_title="Rule of Law Blog",
-    layout="wide",
-    initial_sidebar_state="collapsed",
-)
-
-# 2. Inyección de CSS para que el HTML se vea como una página completa
-custom_css = """
-<style>
-    /* Oculta los elementos por defecto de Streamlit (cabecera, menú, pie de página) */
-    #MainMenu { visibility: hidden; }
-    footer { visibility: hidden; }
-    header { visibility: hidden; }
-
-    /* Estiliza el contenedor principal de Streamlit para eliminar el relleno excesivo */
-    .block-container {
-        padding-top: 0rem !important; 
-        padding-left: 0rem !important;
-        padding-right: 0rem !important;
-        padding-bottom: 0rem !important;
-        max-width: none !important; /* Desactiva la limitación de ancho de Streamlit */
-    }
-
-    /* Asegura que el fondo de la aplicación Streamlit sea blanco/gris claro */
-    .stApp {
-        background-color: #f8f8f8; /* Fondo muy claro */
-    }
-</style>
-"""
-st.markdown(custom_css, unsafe_allow_html=True)
-
-# 3. El contenido HTML rediseñado para un estilo de revista/periódico (Serif y limpieza)
-html_content = """
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -51,9 +14,11 @@ html_content = """
         .font-sans {
             font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
         }
-        /* Estilos para el separador vertical clásico */
-        .divider {
-            border-left: 1px solid #e5e7eb; /* gray-200 */
+        /* Aseguramos que el BODY ocupe todo el espacio visible y maneje el layout flex */
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
     </style>
 </head>
@@ -75,7 +40,7 @@ html_content = """
                     <a href="#" class="hover:text-blue-700 transition duration-150">Documentos</a>
                 </nav>
 
-                <!-- Botón y Búsqueda -->
+                <!-- Botón y Suscripción -->
                 <div class="flex items-center space-x-4">
                     <button class="bg-blue-800 hover:bg-blue-700 transition duration-150 text-white px-4 py-1.5 rounded-sm text-sm font-semibold shadow-md">Suscríbete</button>
                 </div>
@@ -83,8 +48,8 @@ html_content = """
         </div>
     </header>
 
-    <!-- Área principal del contenido -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <!-- Área principal del contenido (flex-grow asegura que ocupe el espacio restante) -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex-grow">
         
         <!-- Sección Hero y Columna de Artículos (3 columnas) -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-10">
@@ -209,8 +174,8 @@ html_content = """
 
     </main>
 
-    <!-- Footer amplio y profesional -->
-    <footer class="bg-gray-900 text-gray-300 mt-16">
+    <!-- Footer amplio y profesional (mt-auto asegura que se pegue al fondo) -->
+    <footer class="bg-gray-900 text-gray-300 mt-16 mt-auto">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid grid-cols-2 md:grid-cols-5 gap-8">
             
             <div class="col-span-2">
@@ -254,7 +219,6 @@ html_content = """
     </footer>
 </body>
 </html>
-"""
-# 4. Muestra el contenido HTML usando Markdown
-st.markdown(html_content, unsafe_allow_html=True)
+
+
 
