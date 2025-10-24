@@ -8,313 +8,253 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
-# 2. Inyección de CSS moderno para Streamlit
-# Este CSS oculta los elementos por defecto de Streamlit (cabecera, menú, pie de página)
-# y ajusta el relleno para que el contenido HTML incrustado se sienta nativo.
+# 2. Inyección de CSS para que el HTML se vea como una página completa
 custom_css = """
 <style>
-    /* Oculta el menú de hamburguesa y el pie de página por defecto de Streamlit */
+    /* Oculta los elementos por defecto de Streamlit (cabecera, menú, pie de página) */
     #MainMenu { visibility: hidden; }
     footer { visibility: hidden; }
     header { visibility: hidden; }
 
     /* Estiliza el contenedor principal de Streamlit para eliminar el relleno excesivo */
     .block-container {
-        padding-top: 0rem; 
-        padding-left: 0rem;
-        padding-right: 0rem;
-        padding-bottom: 0rem;
+        padding-top: 0rem !important; 
+        padding-left: 0rem !important;
+        padding-right: 0rem !important;
+        padding-bottom: 0rem !important;
+        max-width: none !important; /* Desactiva la limitación de ancho de Streamlit */
     }
 
-    /* Asegura que el fondo de la aplicación Streamlit coincida con el fondo del HTML (gray-100) */
+    /* Asegura que el fondo de la aplicación Streamlit sea blanco/gris claro */
     .stApp {
-        background-color: #f3f4f6; /* Coincide con bg-gray-100 */
-    }
-
-    /* Opcional: Si quieres forzar la fuente 'Inter' en elementos que Streamlit pudiera inyectar */
-    .stApp, .stApp * {
-        font-family: 'Inter', sans-serif !important;
+        background-color: #f8f8f8; /* Fondo muy claro */
     }
 </style>
 """
 st.markdown(custom_css, unsafe_allow_html=True)
 
-# 3. El contenido HTML completo
-# Se utiliza la sintaxis de triple comilla para manejar el contenido HTML multilinea.
-# Nota: La etiqueta <script src="https://cdn.tailwindcss.com"></script> se utiliza para cargar Tailwind CSS.
-# Los marcadores de posición de imagen ('placehold.co') se usan para asegurar la visualización inmediata.
+# 3. El contenido HTML rediseñado para un estilo de revista/periódico (Serif y limpieza)
 html_content = """
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Rule of Law — Blog | Estado de Derecho, Democracia y Derechos Humanos</title>
-  <!-- Usando el CDN de Tailwind CSS v3 para mejor compatibilidad -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    /* Usando la fuente Inter para un look moderno */
-    body {
-      font-family: 'Inter', sans-serif;
-    }
-    /* Estilos adicionales para simular un periódico moderno */
-    .marquee {
-      white-space: nowrap;
-      overflow: hidden;
-    }
-    .marquee div {
-      display: inline-block;
-      padding-left: 100%;
-      animation: marquee 18s linear infinite;
-    }
-    @keyframes marquee {
-      0% { transform: translate(0, 0); }
-      100% { transform: translate(-100%, 0); }
-    }
-  </style>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Rule of Law — Blog</title>
+    <!-- Usando el CDN de Tailwind CSS v3 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Definimos una fuente serif para títulos y una sans para el cuerpo */
+        .font-serif {
+            font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+        }
+        .font-sans {
+            font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+        }
+        /* Estilos para el separador vertical clásico */
+        .divider {
+            border-left: 1px solid #e5e7eb; /* gray-200 */
+        }
+    </style>
 </head>
-<body class="bg-gray-100 text-gray-900 font-sans">
-  <!-- Cabecera principal -->
-  <header class="bg-white shadow-md sticky top-0 z-40 border-t-4 border-blue-900">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between items-center py-4">
-        <div class="flex items-center space-x-4">
-          <div class="text-3xl font-extrabold text-blue-900 tracking-tight">Rule of Law</div>
-          <div class="hidden md:flex items-center text-sm text-gray-600 space-x-4">
-            <a href="#" class="hover:text-blue-800 transition duration-150">Política</a>
-            <a href="#" class="hover:text-blue-800 transition duration-150">Derechos</a>
-            <a href="#" class="hover:text-blue-800 transition duration-150">Justicia</a>
-            <a href="#" class="hover:text-blue-800 transition duration-150">Opinión</a>
-          </div>
-        </div>
-        <div class="flex items-center space-x-4">
-          <form class="hidden sm:block">
-            <input aria-label="Buscar" placeholder="Buscar..." class="border rounded-full px-4 py-1 text-sm focus:ring-2 focus:ring-blue-500 transition duration-150" />
-          </form>
-          <button class="bg-blue-800 hover:bg-blue-700 transition duration-150 text-white px-4 py-1.5 rounded-full text-sm font-semibold shadow-md">Suscríbete</button>
-        </div>
-      </div>
-    </div>
-    <!-- Ticker de últimas noticias -->
-    <div class="bg-blue-900 text-white">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="marquee py-2 text-sm font-medium">
-          <div>&bull; Última hora: Informe sobre Estado de Derecho en la UE &bull; Nueva resolución del Parlamento Europeo &bull; Debate sobre independencia judicial en curso &bull; Eventos: seminario sobre derechos humanos (inscríbete) &bull;</div>
-        </div>
-      </div>
-    </div>
-  </header>
+<body class="bg-gray-50 text-gray-900 font-sans">
+    
+    <!-- Header tipo revista: Fijo y Limpio -->
+    <header class="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-5">
+                <!-- Logo/Título Principal -->
+                <div class="text-4xl font-extrabold text-gray-900 font-serif tracking-tight">Rule of Law</div>
+                
+                <!-- Navegación principal -->
+                <nav class="hidden md:flex space-x-8 text-sm font-medium text-gray-700 uppercase">
+                    <a href="#" class="hover:text-blue-700 transition duration-150">Política</a>
+                    <a href="#" class="hover:text-blue-700 transition duration-150">Derechos</a>
+                    <a href="#" class="hover:text-blue-700 transition duration-150">Justicia</a>
+                    <a href="#" class="hover:text-blue-700 transition duration-150">Opinión</a>
+                    <a href="#" class="hover:text-blue-700 transition duration-150">Documentos</a>
+                </nav>
 
-  <!-- Área principal tipo periódico: hero + columnas -->
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
-      <!-- Columnón principal (col-span 3) -->
-      <div class="lg:col-span-3 space-y-8">
-        <!-- Hero principal (imagen grande) -->
-        <article class="bg-white rounded-xl shadow-lg hover:shadow-xl transition duration-300 overflow-hidden">
-          <div class="md:flex">
-            <div class="md:w-2/3">
-              <!-- Marcador de posición de imagen -->
-              <img src="https://placehold.co/800x400/0A3D62/FFFFFF?text=Estado+de+Derecho" alt="Comisión Europea" class="w-full h-80 object-cover">
-            </div>
-            <div class="md:w-1/3 p-6 flex flex-col justify-between">
-              <div>
-                <span class="text-xs font-semibold uppercase tracking-wider text-blue-600 bg-blue-100 px-2 py-0.5 rounded">Política · Bruselas</span>
-                <h2 class="mt-3 text-2xl font-bold leading-snug">La situación del Estado de Derecho en la Unión Europea: nuevo informe</h2>
-                <p class="mt-3 text-gray-700 text-sm leading-relaxed">Un análisis exhaustivo sobre la independencia judicial y las recomendaciones para reforzar las instituciones democráticas en los Estados miembros.</p>
-            </div>
-              <div class="mt-4 text-sm text-gray-600 border-t pt-3">Por: <span class="font-medium">Equipo Rule of Law</span> · 24 oct 2025</div>
-            </div>
-          </div>
-        </article>
+                <!-- Botón y Búsqueda -->
+                <div class="flex items-center space-x-4">
+                    <button class="bg-blue-800 hover:bg-blue-700 transition duration-150 text-white px-4 py-1.5 rounded-sm text-sm font-semibold shadow-md">Suscríbete</button>
+                </div>
+            </div>
+        </div>
+    </header>
 
-        <!-- Grid de artículos destacados -->
-        <section class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          <article class="bg-white rounded-xl shadow-lg hover:shadow-xl transition duration-300 overflow-hidden">
-            <!-- Marcador de posición de imagen -->
-            <img src="https://placehold.co/400x250/1C508C/FFFFFF?text=Noticia" alt="miniatura" class="w-full h-44 object-cover">
-            <div class="p-5">
-              <span class="text-xs font-semibold uppercase tracking-wider text-green-600">Opinión</span>
-              <h3 class="mt-2 font-bold text-xl leading-tight">¿Cómo proteger la independencia judicial?</h3>
-              <p class="text-sm text-gray-700 mt-2">Columnas de expertos sobre medidas prácticas y reformas legales necesarias para garantizar tribunales imparciales.</p>
-            </div>
-          </article>
+    <!-- Área principal del contenido -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        
+        <!-- Sección Hero y Columna de Artículos (3 columnas) -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-10">
+            
+            <!-- Artículo Destacado Grande (Columna 1 y 2) -->
+            <article class="lg:col-span-2 bg-white rounded-lg shadow-xl hover:shadow-2xl transition duration-300 overflow-hidden">
+                <!-- Placeholder de imagen -->
+                <img src="https://placehold.co/1200x500/0A3D62/FFFFFF?text=PORTADA" alt="Imagen principal sobre la justicia" class="w-full h-96 object-cover border-b-4 border-blue-600">
+                <div class="p-6">
+                    <span class="text-xs font-bold uppercase tracking-widest text-blue-600">Política</span>
+                    <h1 class="mt-2 text-4xl font-bold leading-tight font-serif text-gray-900">
+                        El Equilibrio en Tiempos de Crisis: Análisis del Nuevo Informe de la UE
+                    </h1>
+                    <p class="mt-4 text-gray-700 text-lg leading-relaxed">
+                        Un análisis detallado de las recomendaciones para asegurar la independencia judicial y los derechos fundamentales en el continente europeo. La presión internacional crece.
+                    </p>
+                    <div class="mt-5 text-sm text-gray-500 border-t pt-4 flex justify-between">
+                        <span>Por: <span class="font-semibold text-gray-700">Dr. Helena Robles</span></span>
+                        <span>Hace 2 horas</span>
+                    </div>
+                </div>
+            </article>
 
-          <article class="bg-white rounded-xl shadow-lg hover:shadow-xl transition duration-300 overflow-hidden">
-            <!-- Marcador de posición de imagen -->
-            <img src="https://placehold.co/400x250/1C508C/FFFFFF?text=Eventos" alt="miniatura" class="w-full h-44 object-cover">
-            <div class="p-5">
-              <span class="text-xs font-semibold uppercase tracking-wider text-orange-600">Eventos</span>
-              <h3 class="mt-2 font-bold text-xl leading-tight">Seminario: Democracia y participación ciudadana</h3>
-              <p class="text-sm text-gray-700 mt-2">Un repaso a los próximos encuentros en varias capitales europeas.</p>
-            </div>
-          </article>
-        </section>
+            <!-- Sidebar (Columna 3) -->
+            <aside class="space-y-8">
+                
+                <!-- Búsqueda y Suscripción -->
+                <div class="bg-white p-6 border border-gray-200 rounded-lg shadow">
+                    <h4 class="font-bold text-lg mb-3 text-gray-800 font-serif">Buscar Artículos</h4>
+                    <input type="text" placeholder="Escribe aquí para buscar..." class="w-full border border-gray-300 rounded-sm px-4 py-2 text-sm focus:ring-blue-500 focus:border-blue-500" />
+                    
+                    <h4 class="font-bold text-lg mt-6 mb-3 text-gray-800 font-serif">Boletín Exclusivo</h4>
+                    <p class="text-sm text-gray-600 mb-3">Recibe nuestro resumen semanal.</p>
+                    <button class="w-full bg-blue-600 hover:bg-blue-500 transition duration-150 text-white rounded-sm px-4 py-2 text-sm font-semibold">Regístrate</button>
+                </div>
+                
+                <!-- Artículos Populares -->
+                <div class="bg-white p-6 border border-gray-200 rounded-lg shadow">
+                    <h4 class="font-bold text-lg mb-4 text-gray-800 border-b pb-2 font-serif">Lo más leído</h4>
+                    <ol class="list-decimal pl-5 space-y-3 text-sm text-gray-700">
+                        <li class="hover:text-blue-600 transition duration-150 cursor-pointer">
+                            <span class="font-semibold">La batalla por el 'Rule of Law' en el TJUE</span>
+                            <p class="text-xs text-gray-500 mt-0.5">Opinión | 15 comentarios</p>
+                        </li>
+                        <li class="hover:text-blue-600 transition duration-150 cursor-pointer">
+                            <span class="font-semibold">Desafíos de la inteligencia artificial y los derechos humanos</span>
+                            <p class="text-xs text-gray-500 mt-0.5">Tecnología | 8 comentarios</p>
+                        </li>
+                        <li class="hover:text-blue-600 transition duration-150 cursor-pointer">
+                            <span class="font-semibold">Entrevista con el Comisario de Justicia Europeo</span>
+                            <p class="text-xs text-gray-500 mt-0.5">Entrevistas | 2 comentarios</p>
+                        </li>
+                    </ol>
+                </div>
 
-        <!-- Lista de artículos recientes estilo periódico -->
-        <section class="bg-white rounded-xl shadow-lg p-6">
-          <h3 class="text-2xl font-extrabold border-b pb-3 mb-4 text-blue-900">Últimas noticias</h3>
-          <ul class="divide-y divide-gray-200">
-            <li class="py-4">
-              <a href="#" class="flex items-start space-x-4 hover:bg-gray-50 p-2 -m-2 rounded transition duration-150">
-                <!-- Marcador de posición de imagen -->
-                <img src="https://placehold.co/96x64/3472A8/FFFFFF?text=Thumb" alt="thumb" class="w-24 h-16 object-cover rounded">
-                <div class="flex-1">
-                  <h4 class="font-semibold text-lg">La Comisión presenta medidas para salvaguardar el Estado de Derecho</h4>
-                  <p class="text-sm text-gray-600 mt-1">La propuesta incluye un mecanismo de seguimiento y ayudas condicionadas.</p>
-                </div>
-              </a>
-            </li>
-            <li class="py-4">
-              <a href="#" class="flex items-start space-x-4 hover:bg-gray-50 p-2 -m-2 rounded transition duration-150">
-                <!-- Marcador de posición de imagen -->
-                <img src="https://placehold.co/96x64/3472A8/FFFFFF?text=Thumb" alt="thumb" class="w-24 h-16 object-cover rounded">
-                <div class="flex-1">
-                  <h4 class="font-semibold text-lg">Debate en el Parlamento Europeo sobre derechos fundamentales</h4>
-                  <p class="text-sm text-gray-600 mt-1">Representantes discuten el balance entre seguridad y libertades civiles.</p>
-                </div>
-              </a>
-            </li>
-            <li class="py-4">
-              <a href="#" class="flex items-start space-x-4 hover:bg-gray-50 p-2 -m-2 rounded transition duration-150">
-                <!-- Marcador de posición de imagen -->
-                <img src="https://placehold.co/96x64/3472A8/FFFFFF?text=Thumb" alt="thumb" class="w-24 h-16 object-cover rounded">
-                <div class="flex-1">
-                  <h4 class="font-semibold text-lg">Análisis de la nueva sentencia del TJUE sobre protección de datos</h4>
-                  <p class="text-sm text-gray-600 mt-1">Una mirada a las implicaciones para las empresas y los ciudadanos.</p>
-                </div>
-              </a>
-            </li>
-          </ul>
-        </section>
-      </div>
+            </aside>
+        </div>
 
-      <!-- Barra lateral (sidebar) -->
-      <aside class="space-y-6">
-        <div class="bg-white rounded-xl shadow-lg p-6">
-          <h4 class="font-bold text-xl mb-3 text-blue-900">Suscríbete a nuestro boletín</h4>
-          <p class="text-sm text-gray-600 mb-4">Recibe boletines con lo más relevante sobre Estado de Derecho y derechos humanos.</p>
-          <form class="space-y-3">
-            <input type="email" placeholder="Correo electrónico" class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:ring-blue-500 focus:border-blue-500" required />
-            <button class="w-full bg-blue-800 hover:bg-blue-700 transition duration-150 text-white rounded-lg px-4 py-2 text-sm font-semibold shadow-md">Suscribirse</button>
-          </form>
-        </div>
+        <!-- Sección de Artículos Secundarios (Layout de 3 columnas de contenido) -->
+        <section class="mt-12">
+            <h2 class="text-3xl font-bold font-serif border-b-2 border-gray-300 pb-3 mb-6 text-gray-900">
+                Análisis Profundo y Columnas
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <!-- Tarjeta 1 -->
+                <article class="bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition duration-300 overflow-hidden">
+                    <div class="p-5">
+                        <span class="text-xs font-bold uppercase tracking-widest text-red-600">Derechos Humanos</span>
+                        <h3 class="mt-2 text-xl font-bold leading-snug font-serif text-gray-900 hover:text-blue-700 cursor-pointer">
+                            El impacto de la digitalización en la privacidad de los ciudadanos
+                        </h3>
+                        <p class="mt-3 text-sm text-gray-700">
+                            Un editorial sobre cómo los gobiernos están gestionando el balance entre seguridad y la protección de datos personales.
+                        </p>
+                        <div class="mt-4 text-xs text-gray-500">
+                            <span class="font-semibold">Por: A. López</span> | 18 Oct 2025
+                        </div>
+                    </div>
+                </article>
 
-        <div class="bg-white rounded-xl shadow-lg p-6">
-          <h4 class="font-bold text-xl mb-4 text-blue-900">Tendencias</h4>
-          <ol class="list-none text-sm space-y-3 text-gray-700">
-            <li class="flex items-start">
-              <span class="text-blue-800 font-bold mr-2 text-lg">1.</span>
-              <a href="#" class="hover:text-blue-600 transition duration-150">Independencia judicial en Polonia y el TUE</a>
-            </li>
-            <li class="flex items-start">
-              <span class="text-blue-800 font-bold mr-2 text-lg">2.</span>
-              <a href="#" class="hover:text-blue-600 transition duration-150">Informe anual sobre el estado de los derechos humanos en el mundo</a>
-            </li>
-            <li class="flex items-start">
-              <span class="text-blue-800 font-bold mr-2 text-lg">3.</span>
-              <a href="#" class="hover:text-blue-600 transition duration-150">Sentencia clave del Tribunal de Justicia de la UE</a>
-            </li>
-          </ol>
-        </div>
+                <!-- Tarjeta 2 -->
+                <article class="bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition duration-300 overflow-hidden">
+                    <div class="p-5">
+                        <span class="text-xs font-bold uppercase tracking-widest text-green-600">Justicia</span>
+                        <h3 class="mt-2 text-xl font-bold leading-snug font-serif text-gray-900 hover:text-blue-700 cursor-pointer">
+                            La reforma de los sistemas judiciales en la periferia de la UE
+                        </h3>
+                        <p class="mt-3 text-sm text-gray-700">
+                            Evaluación de los programas de asistencia y la evolución de las instituciones judiciales en los países candidatos.
+                        </p>
+                        <div class="mt-4 text-xs text-gray-500">
+                            <span class="font-semibold">Por: I. Sánchez</span> | 17 Oct 2025
+                        </div>
+                    </div>
+                </article>
 
-        <div class="bg-white rounded-xl shadow-lg p-6">
-          <h4 class="font-bold text-xl mb-4 text-blue-900">Opiniones destacadas</h4>
-          <div class="space-y-3 text-sm text-gray-700">
-            <a href="#" class="block hover:text-blue-600 hover:underline transition duration-150 border-b border-gray-100 pb-2">La defensa de las libertades en tiempos difíciles</a>
-            <a href="#" class="block hover:text-blue-600 hover:underline transition duration-150 border-b border-gray-100 pb-2">El papel de la sociedad civil y su impacto en la justicia</a>
-          </div>
-        </div>
-      </aside>
-    </div>
+                <!-- Tarjeta 3 -->
+                <article class="bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition duration-300 overflow-hidden">
+                    <div class="p-5">
+                        <span class="text-xs font-bold uppercase tracking-widest text-indigo-600">Opinión</span>
+                        <h3 class="mt-2 text-xl font-bold leading-snug font-serif text-gray-900 hover:text-blue-700 cursor-pointer">
+                            Columna: ¿Es el derecho internacional la respuesta a la guerra?
+                        </h3>
+                        <p class="mt-3 text-sm text-gray-700">
+                            Una perspectiva filosófica sobre la aplicación de las leyes internacionales en conflictos armados actuales.
+                        </p>
+                        <div class="mt-4 text-xs text-gray-500">
+                            <span class="font-semibold">Por: G. Fuentes</span> | 16 Oct 2025
+                        </div>
+                    </div>
+                </article>
+                
+            </div>
+            
+            <div class="mt-10 text-center">
+                <button class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-6 rounded-sm shadow transition duration-150 text-sm">
+                    Ver más artículos antiguos →
+                </button>
+            </div>
+        </section>
 
-    <!-- Sección de blog / columnas secundarias -->
-    <section class="mt-12 grid grid-cols-1 lg:grid-cols-3 gap-6">
-      <div class="lg:col-span-2 space-y-4">
-        <h3 class="text-2xl font-extrabold text-blue-900 mb-4 border-b pb-3">Publicaciones recientes</h3>
-        <article class="bg-white rounded-xl shadow hover:shadow-lg p-5 transition duration-300">
-          <h4 class="font-bold text-lg">Nuevo estudio sobre participación ciudadana y Estado de Derecho</h4>
-          <p class="text-sm text-gray-700 mt-2">Resumen del estudio con enlaces para descargar el informe completo y materiales complementarios.</p>
-          <div class="text-xs text-gray-500 mt-2">Derechos | 23 Octubre</div>
-        </article>
+    </main>
 
-        <article class="bg-white rounded-xl shadow hover:shadow-lg p-5 transition duration-300">
-          <h4 class="font-bold text-lg">Columna de opinión: Sociedad y justicia en el siglo XXI</h4>
-          <p class="text-sm text-gray-700 mt-2">Reflexión de una experta en derecho constitucional sobre los desafíos actuales.</p>
-          <div class="text-xs text-gray-500 mt-2">Opinión | 22 Octubre</div>
-        </article>
-      </div>
+    <!-- Footer amplio y profesional -->
+    <footer class="bg-gray-900 text-gray-300 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid grid-cols-2 md:grid-cols-5 gap-8">
+            
+            <div class="col-span-2">
+                <h5 class="font-extrabold text-2xl mb-3 text-white font-serif">Rule of Law</h5>
+                <p class="text-sm text-gray-400">El sitio de análisis y debate líder en temas de justicia, democracia y derechos fundamentales.</p>
+                <p class="text-xs text-gray-500 mt-4">&copy; 2025 Rule of Law Media</p>
+            </div>
 
-      <aside class="space-y-6">
-        <div class="bg-white rounded-xl shadow-lg p-6">
-          <h4 class="font-bold text-xl text-blue-900 mb-4">Eventos próximos</h4>
-          <ul class="text-sm text-gray-700 space-y-3">
-            <li class="border-b border-gray-100 pb-2">
-              <span class="font-semibold text-blue-600">12 Nov:</span> Seminario en Bruselas (Independencia)
-            </li>
-            <li class="border-b border-gray-100 pb-2">
-              <span class="font-semibold text-blue-600">5 Dic:</span> Foro internacional de derechos humanos
-            </li>
-          </ul>
-        </div>
-
-        <div class="bg-white rounded-xl shadow-lg p-6">
-          <h4 class="font-bold text-xl text-blue-900 mb-4">Archivo</h4>
-          <select class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:ring-blue-500 focus:border-blue-500">
-            <option>Octubre 2025</option>
-            <option>Septiembre 2025</option>
-            <option>Agosto 2025</option>
-          </select>
-        </div>
-      </aside>
-    </section>
-  </main>
-
-  <!-- Pie de página tipo periódico -->
-  <footer class="bg-gray-900 text-gray-200 mt-12">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 grid grid-cols-2 md:grid-cols-4 gap-8">
-      <div class="col-span-2 md:col-span-1">
-        <h5 class="font-extrabold text-xl mb-3 text-white">Rule of Law</h5>
-        <p class="text-sm text-gray-400">Blog especializado en democracia, Estado de Derecho y derechos humanos en la Unión Europea.</p>
-        <p class="text-sm text-gray-400 mt-4">Redes sociales:</p>
-        <!-- Placeholder para iconos de redes sociales (no visibles sin librerías externas) -->
-        <div class="flex space-x-3 mt-1">
-          <a href="#" class="text-gray-500 hover:text-blue-400">X</a>
-          <a href="#" class="text-gray-500 hover:text-blue-400">FB</a>
-          <a href="#" class="text-gray-500 hover:text-blue-400">LI</a>
-        </div>
-      </div>
-      <div>
-        <h5 class="font-bold mb-3 text-white">Secciones</h5>
-        <ul class="text-sm text-gray-400 space-y-2">
-          <li><a href="#" class="hover:text-blue-400">Política</a></li>
-          <li><a href="#" class="hover:text-blue-400">Derechos</a></li>
-          <li><a href="#" class="hover:text-blue-400">Justicia</a></li>
-          <li><a href="#" class="hover:text-blue-400">Opinión</a></li>
-        </ul>
-      </div>
-      <div>
-        <h5 class="font-bold mb-3 text-white">Sobre nosotros</h5>
-        <ul class="text-sm text-gray-400 space-y-2">
-          <li><a href="#" class="hover:text-blue-400">Miembros</a></li>
-          <li><a href="#" class="hover:text-blue-400">Actividades</a></li>
-          <li><a href="#" class="hover:text-blue-400">Publicaciones</a></li>
-        </ul>
-      </div>
-      <div>
-        <h5 class="font-bold mb-3 text-white">Contacto</h5>
-        <p class="text-sm text-gray-400">contacto@ruleoflaw.eu</p>
-        <p class="text-sm text-gray-400 mt-4">Dirección:</p>
-        <p class="text-sm text-gray-400">Avenida de la Justicia, 15</p>
-      </div>
-    </div>
-    <div class="border-t border-gray-800 text-center py-4 text-sm text-gray-500">
-      &copy; 2025 Rule of Law · Todos los derechos reservados
-    </div>
-  </footer>
+            <div>
+                <h5 class="font-bold mb-4 text-white uppercase text-sm">Temas</h5>
+                <ul class="text-sm text-gray-400 space-y-2">
+                    <li><a href="#" class="hover:text-blue-400">Política</a></li>
+                    <li><a href="#" class="hover:text-blue-400">Justicia Penal</a></li>
+                    <li><a href="#" class="hover:text-blue-400">Derechos Civiles</a></li>
+                    <li><a href="#" class="hover:text-blue-400">Internacional</a></li>
+                </ul>
+            </div>
+            
+            <div>
+                <h5 class="font-bold mb-4 text-white uppercase text-sm">Archivo</h5>
+                <ul class="text-sm text-gray-400 space-y-2">
+                    <li><a href="#" class="hover:text-blue-400">2025</a></li>
+                    <li><a href="#" class="hover:text-blue-400">2024</a></li>
+                    <li><a href="#" class="hover:text-blue-400">Especiales</a></li>
+                    <li><a href="#" class="hover:text-blue-400">Investigaciones</a></li>
+                </ul>
+            </div>
+            
+            <div>
+                <h5 class="font-bold mb-4 text-white uppercase text-sm">Legal</h5>
+                <ul class="text-sm text-gray-400 space-y-2">
+                    <li><a href="#" class="hover:text-blue-400">Aviso Legal</a></li>
+                    <li><a href="#" class="hover:text-blue-400">Política de Privacidad</a></li>
+                    <li><a href="#" class="hover:text-blue-400">Contacto</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="border-t border-gray-800 text-center py-4 text-sm text-gray-500">
+            Desarrollado con pasión.
+        </div>
+    </footer>
 </body>
 </html>
 """
-# 4. Muestra el contenido HTML usando Markdown con la opción para permitir HTML no seguro.
+# 4. Muestra el contenido HTML usando Markdown
 st.markdown(html_content, unsafe_allow_html=True)
 
