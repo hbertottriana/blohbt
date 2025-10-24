@@ -8,7 +8,38 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
-# 2. El contenido HTML completo
+# 2. Inyección de CSS moderno para Streamlit
+# Este CSS oculta los elementos por defecto de Streamlit (cabecera, menú, pie de página)
+# y ajusta el relleno para que el contenido HTML incrustado se sienta nativo.
+custom_css = """
+<style>
+    /* Oculta el menú de hamburguesa y el pie de página por defecto de Streamlit */
+    #MainMenu { visibility: hidden; }
+    footer { visibility: hidden; }
+    header { visibility: hidden; }
+
+    /* Estiliza el contenedor principal de Streamlit para eliminar el relleno excesivo */
+    .block-container {
+        padding-top: 0rem; 
+        padding-left: 0rem;
+        padding-right: 0rem;
+        padding-bottom: 0rem;
+    }
+
+    /* Asegura que el fondo de la aplicación Streamlit coincida con el fondo del HTML (gray-100) */
+    .stApp {
+        background-color: #f3f4f6; /* Coincide con bg-gray-100 */
+    }
+
+    /* Opcional: Si quieres forzar la fuente 'Inter' en elementos que Streamlit pudiera inyectar */
+    .stApp, .stApp * {
+        font-family: 'Inter', sans-serif !important;
+    }
+</style>
+"""
+st.markdown(custom_css, unsafe_allow_html=True)
+
+# 3. El contenido HTML completo
 # Se utiliza la sintaxis de triple comilla para manejar el contenido HTML multilinea.
 # Nota: La etiqueta <script src="https://cdn.tailwindcss.com"></script> se utiliza para cargar Tailwind CSS.
 # Los marcadores de posición de imagen ('placehold.co') se usan para asegurar la visualización inmediata.
@@ -245,6 +276,13 @@ html_content = """
       <div class="col-span-2 md:col-span-1">
         <h5 class="font-extrabold text-xl mb-3 text-white">Rule of Law</h5>
         <p class="text-sm text-gray-400">Blog especializado en democracia, Estado de Derecho y derechos humanos en la Unión Europea.</p>
+        <p class="text-sm text-gray-400 mt-4">Redes sociales:</p>
+        <!-- Placeholder para iconos de redes sociales (no visibles sin librerías externas) -->
+        <div class="flex space-x-3 mt-1">
+          <a href="#" class="text-gray-500 hover:text-blue-400">X</a>
+          <a href="#" class="text-gray-500 hover:text-blue-400">FB</a>
+          <a href="#" class="text-gray-500 hover:text-blue-400">LI</a>
+        </div>
       </div>
       <div>
         <h5 class="font-bold mb-3 text-white">Secciones</h5>
@@ -266,13 +304,8 @@ html_content = """
       <div>
         <h5 class="font-bold mb-3 text-white">Contacto</h5>
         <p class="text-sm text-gray-400">contacto@ruleoflaw.eu</p>
-        <p class="text-sm text-gray-400 mt-4">Redes sociales:</p>
-        <!-- Placeholder para iconos de redes sociales (no visibles sin librerías externas) -->
-        <div class="flex space-x-3 mt-1">
-          <a href="#" class="text-gray-500 hover:text-blue-400">X</a>
-          <a href="#" class="text-gray-500 hover:text-blue-400">FB</a>
-          <a href="#" class="text-gray-500 hover:text-blue-400">LI</a>
-        </div>
+        <p class="text-sm text-gray-400 mt-4">Dirección:</p>
+        <p class="text-sm text-gray-400">Avenida de la Justicia, 15</p>
       </div>
     </div>
     <div class="border-t border-gray-800 text-center py-4 text-sm text-gray-500">
@@ -282,6 +315,6 @@ html_content = """
 </body>
 </html>
 """
-# 3. Muestra el contenido HTML usando Markdown con la opción para permitir HTML no seguro.
-# Esto incrusta todo el diseño Tailwind/CSS directamente en la aplicación Streamlit.
+# 4. Muestra el contenido HTML usando Markdown con la opción para permitir HTML no seguro.
 st.markdown(html_content, unsafe_allow_html=True)
+
